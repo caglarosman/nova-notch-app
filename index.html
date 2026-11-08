@@ -35,7 +35,12 @@
     <a class="btn ghost" href="https://buymeacoffee.com/novapp" target="_blank" rel="noopener">☕ <span data-i18n="cta.coffee">Buy me a coffee</span></a>
   </div>
   <p class="req" data-i18n="hero.req">Free · macOS 14 Sonoma or later · Apple Silicon · Signed &amp; notarized by Apple</p>
-  <img class="hero-shot" data-shot="01-music" src="assets/shots/en/01-music.jpg" alt="Nova music player in the notch">
+  <div class="hero-video">
+    <video id="demo" autoplay muted loop playsinline preload="metadata" poster="assets/video/poster-en.jpg" aria-label="Nova demo video">
+      <source src="assets/video/nova-demo-en.mp4" type="video/mp4">
+    </video>
+    <button class="vtoggle" id="vtoggle" aria-label="Pause video">❚❚</button>
+  </div>
 </section>
 
 <section id="features" class="features"></section>

@@ -63,6 +63,16 @@ function render(lang) {
   document.querySelectorAll("[data-shot]").forEach(img => {
     img.src = `assets/shots/${lang}/${img.dataset.shot}.jpg`;
   });
+  const video = document.getElementById("demo");
+  if (video) {
+    const src = `assets/video/nova-demo-${lang}.mp4`;
+    if (!video.currentSrc.endsWith(src)) {
+      video.poster = `assets/video/poster-${lang}.jpg`;
+      video.querySelector("source").src = src;
+      video.load();
+      if (!reduceMotion) video.play().catch(() => {});
+    }
+  }
   const features = document.getElementById("features");
   if (features) {
     features.innerHTML = SHOTS.map(id => `
@@ -74,6 +84,21 @@ function render(lang) {
   const btn = document.getElementById("lang");
   if (btn) btn.textContent = lang === "en" ? "TR" : "EN";
   localStorage.setItem("lang", lang);
+}
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const demo = document.getElementById("demo");
+const vtoggle = document.getElementById("vtoggle");
+function syncToggle() {
+  if (!demo || !vtoggle) return;
+  vtoggle.textContent = demo.paused ? "▶" : "❚❚";
+  vtoggle.setAttribute("aria-label", demo.paused ? "Play video" : "Pause video");
+}
+if (demo) {
+  if (reduceMotion) { demo.removeAttribute("autoplay"); demo.pause(); }
+  demo.addEventListener("play", syncToggle);
+  demo.addEventListener("pause", syncToggle);
+  vtoggle?.addEventListener("click", () => demo.paused ? demo.play() : demo.pause());
 }
 
 const saved = localStorage.getItem("lang");
